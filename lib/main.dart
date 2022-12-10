@@ -13,9 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Raleway'),
         home: LoginPage(),
         themeMode: ThemeMode.light,
-        theme: ThemeData(primarySwatch: Colors.grey),
+        // theme: ThemeData(primarySwatch: Colors.grey),
         darkTheme: ThemeData(
           brightness: Brightness.dark
         ),
