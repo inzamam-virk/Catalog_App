@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/models/catalog.dart';
 import 'package:flutter_application_2/widgets/drawer.dart';
+import 'package:flutter_application_2/widgets/item_widget.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final CatalogModel obj = CatalogModel();
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +14,13 @@ class HomePage extends StatelessWidget {
         title: Text("Catalog app"),
         // backgroundColor: Colors.deepPurple,
       ),
-      body: Center(
-        child: Container(
-          child: Text("This is my App"),
-        )
+      body: ListView.builder(
+        itemCount: obj.items.length,
+        itemBuilder: ((context, index) {
+          return ItemWidget(item: obj.items[index]);
+        }),
       ),
       drawer: MyDrawer(),
-      );
+    );
   }
 }
