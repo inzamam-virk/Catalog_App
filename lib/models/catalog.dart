@@ -1,18 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class CatalogModel{
-  final items = [
-    Item(
-      id: 1,
-      name: "Iphone11pro",
-      desc: "Apple iphone 12th generation",
-      price: 909,
-      color: "#33505a",
-      image:
-          "data:image/jpeg;base64,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",
-    )
-  ];
+static List<Item> items = [];
 }
 
-class Item{
+class Item {
   final int id;
   final String name;
   final String desc;
@@ -20,7 +13,86 @@ class Item{
   final String color;
   final String image;
 
-  Item({required this.id,required this.name,required this.desc,required this.price,required this.color,required this.image});
+  Item({
+    required this.id,
+    required this.name,
+    required this.desc,
+    required this.price,
+    required this.color,
+    required this.image
+});
+
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'desc': desc,
+      'price': price,
+      'color': color,
+      'image': image,
+    };
+  }
+
+  factory Item.fromMap(Map<String, dynamic> map) {
+    return Item(
+      id: map["id"],
+            name: map["name"],
+            desc: map["desc"],
+            price: map["price"],
+            color: map["color"],
+            image: map["image"]
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Item.fromJson(String source) => Item.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Item(id: $id, name: $name, desc: $desc, price: $price, color: $color, image: $image)';
+  }
+
+  @override
+  bool operator ==(covariant Item other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.id == id &&
+      other.name == name &&
+      other.desc == desc &&
+      other.price == price &&
+      other.color == color &&
+      other.image == image;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+      name.hashCode ^
+      desc.hashCode ^
+      price.hashCode ^
+      color.hashCode ^
+      image.hashCode;
+  }
 }
 
 
+  // factory Item.fromMap(Map<String, dynamic> map) {
+  //   return Item(
+  //       id: map["id"],
+  //       name: map["name"],
+  //       desc: map["desc"],
+  //       price: map["price"],
+  //       color: map["color"],
+  //       image: map["image"]);
+  // }
+  // toMap() => {
+  //       "id": id,
+  //       "name": name,
+  //       "desc": desc,
+  //       "price": price,
+  //       "color": color,
+  //       "image": image,
+  //     };
