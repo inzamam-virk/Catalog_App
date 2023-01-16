@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/pages/add_to_cart.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../models/catalog.dart';
@@ -14,20 +15,20 @@ class HomePageDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: ButtonBar(
-              alignment: MainAxisAlignment.spaceBetween,
-              children: [
-                "\$${catalog.price}".text.bold.red500.xl4.make(),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: "Buy".text.make(),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black54),
-                  ),
-                ).wh(100, 50)
-              ],
-            ).p32(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
+        // iconTheme: IconThemeData(),
+      ),
+      bottomNavigationBar: Container(
+        color: Theme.of(context).cardColor,
+        child: ButtonBar(
+                alignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  "\$${catalog.price}".text.bold.red900.xl4.make(),
+                  AddToCart(catalog: catalog)
+                ],
+              ).p32(),
+      ),
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -42,11 +43,12 @@ class HomePageDetails extends StatelessWidget {
               arcType: VxArcType.CONVEY,
               edge: VxEdge.TOP,
               child: Container(
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 width: context.screenWidth,
                 child: Column(children: [
-                  catalog.name.text.xl4.bold.make(),
-                  catalog.desc.text.xl.textStyle(context.captionStyle).make(),
+                  catalog.name.text.color(Theme.of(context).accentColor).xl4.bold.make(),
+                  const SizedBox(height: 5,),
+                  catalog.desc.text.color(Theme.of(context).accentColor).xl.textStyle(context.captionStyle).make(),
 
                 ]).py64(),
               ),

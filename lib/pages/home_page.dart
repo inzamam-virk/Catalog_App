@@ -1,15 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_application_2/core/store.dart';
+import 'package:flutter_application_2/pages/add_to_cart.dart';
+import 'package:velocity_x/velocity_x.dart';
 
+import 'package:flutter_application_2/models/cart.dart';
 import 'package:flutter_application_2/models/catalog.dart';
 import 'package:flutter_application_2/pages/home_detailsPage.dart';
-import 'package:flutter_application_2/widgets/drawer.dart';
-import 'package:flutter_application_2/widgets/item_widget.dart';
-import 'package:flutter_application_2/widgets/themes.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_application_2/utils/routes.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -20,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   CatalogModel obj = CatalogModel();
+  final url = "https://api.jsonbin.io/v3/b/63ba9121dfc68e59d57cb285";
 
   @override
   void initState() {
@@ -28,24 +32,33 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async {
-    await Future.delayed(Duration(seconds: 2));
-    final catalogJson =
-        await rootBundle.loadString("assets/files/Catalog.json");
-    // print(catalogJson);
-    final decoded = jsonDecode(catalogJson);
-    var productData = decoded["products"];
+    await Future.delayed(const Duration(seconds: 2));
+    final responce = await http.get(Uri.parse(url));
+    // if (responce.statusCode == 200) {
+    //   // return Item.fromJson(jsonDecode(responce.body));
+    // }
+    final catalogJson = responce.body;
+    // final catalogJson =
+    //     await rootBundle.loadString("assets/files/Catalog.json");
+    var decoded = json.decode(catalogJson);
+    // print(decoded.runtimeType);
+    // print(decoded);
+    var productData1 = decoded["record"];
+    // print(productData1);
+    var productData = productData1["products"];
+    // print(productData.runtimeType);
     // print(productData);
-    CatalogModel.items = List.from(productData)
-        .map<Item>((itemm) => Item.fromMap(itemm))
-        .toList();
+    CatalogModel.items =
+        List.from(productData).map<Item>((item) => Item.fromMap(item)).toList();
     // print(CatalogModel.items);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final _cart = (VxState.store as MyStore).cart;
     return Scaffold(
-      // backgroundColor: MyTheme.,
+      backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
         child: Container(
             padding: Vx.m32,
@@ -58,6 +71,19 @@ class _HomePageState extends State<HomePage> {
                   CircularProgressIndicator().centered().expand(),
               ],
             )),
+      ),
+      floatingActionButton: VxBuilder(
+        mutations: const {AddMutation, RemoveMutation},
+        builder: ((context, store, status) => FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.cartRoute);
+              },
+              child: Icon(
+                CupertinoIcons.cart,
+                color: Colors.white,
+              ),
+              backgroundColor: Theme.of(context).buttonColor,
+            ).badge(color: Colors.blue, size: 15, count: _cart.items.length)),
       ),
     );
   }
@@ -90,39 +116,53 @@ class CatalogList extends StatelessWidget {
 class CatalogItem extends StatelessWidget {
   final Item catalogg;
   const CatalogItem({super.key, required this.catalogg});
-
   @override
   Widget build(BuildContext context) {
+    // print("Network image --->$catalogg.image");
+    // print("Network name --->$catalogg.name");
     return VxBox(
         child: Row(
       children: [
         Hero(
-          tag: Key(catalogg.id.toString()),
-          child: Image.network(catalogg.image).box.p8.make().p1().w32(context)),
+            tag: Key(catalogg.id.toString()),
+            child:
+                Image.network(catalogg.image).box.p8.make().p1().w32(context)),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            catalogg.name.text.xl.bold.make(),
-            catalogg.desc.text.textStyle(context.captionStyle).make(),
+            catalogg.name.text
+                .color(Theme.of(context).accentColor)
+                .xl
+                .bold
+                .make(),
+            const SizedBox(
+              height: 1,
+            ),
+            catalogg.desc.text
+                .color(Theme.of(context).accentColor)
+                .textStyle(context.captionStyle)
+                .make(),
+            const SizedBox(
+              height: 10,
+            ),
             ButtonBar(
               alignment: MainAxisAlignment.spaceBetween,
               children: [
-                "\$${catalogg.price}".text.bold.xl.make(),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: "Buy".text.make(),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black54),
-                  ),
-                )
+                "\$${catalogg.price}"
+                    .text
+                    .color(Theme.of(context).accentColor)
+                    .bold
+                    .xl
+                    .make(),
+                AddToCart(catalog: catalogg)
               ],
-            ).pOnly(right: 8.0)
+            ).pOnly(right: 8.0).h4(context)
           ],
         ))
       ],
-    )).white.rounded.square(100).make().py16();
+    )).color(Theme.of(context).cardColor).rounded.square(100).make().py16();
   }
 }
 
@@ -135,8 +175,17 @@ class MyHeader extends StatelessWidget {
       // mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.values[0],
       children: [
-        "Catalog App".text.start.xl4.bold.color(Colors.blueAccent[50]).make(),
-        "Trending Products".text.xl.make(),
+        Text(
+          "Catalog App",
+          style: TextStyle(color: Theme.of(context).accentColor, fontSize: 35),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          "Trending Products",
+          style: TextStyle(color: Theme.of(context).accentColor, fontSize: 15),
+        ),
       ],
     );
   }
