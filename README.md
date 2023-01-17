@@ -6,7 +6,9 @@ Catalog Application
 
 Catalog app is 
 
-![1673975369375](https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg)
+<img src="https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg" width=50% height=50%>
+
+<!-- ![1673975369375]() -->
 
 
 This project is a starting point for a Flutter application.
