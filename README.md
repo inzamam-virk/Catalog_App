@@ -1,8 +1,13 @@
 # flutter_application_2
 
-A new Flutter project.
+Catalog Application
 
 ## Getting Started
+
+Catalog app is 
+
+![1673975369375](https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg)
+
 
 This project is a starting point for a Flutter application.
 
