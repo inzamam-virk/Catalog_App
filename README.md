@@ -6,7 +6,7 @@ Catalog Application
 
 Catalog app is 
 
-<img src="https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg" width=50% height=50%>
+<img src="https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg" width=30% height=30%>
 
 <!-- ![1673975369375]() -->
 
