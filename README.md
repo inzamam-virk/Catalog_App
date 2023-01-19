@@ -24,6 +24,7 @@ Login page
 .
 
 ##Main page
+Details here are being directly loaded online from json file
 .
 
 <img src="https://user-images.githubusercontent.com/72975725/213372173-ae7e2418-b66c-4be9-a2ac-4dfa623b79a8.jpg" width=30% height=30%>
@@ -32,6 +33,7 @@ Login page
 .
 
 ##Details Page
+Unable to fetch images due to mobile network issue
 .
 
 <img src="https://user-images.githubusercontent.com/72975725/213372426-f53c9a13-b9c3-4693-8b18-a74641a5d492.jpg" width=30% height=30%>
