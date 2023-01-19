@@ -3,7 +3,7 @@
 Catalog app is online store to manage the mobile devices..It involves:
 Login page
 
-##Login Page
+-->##Login Page
 
 <img src="https://user-images.githubusercontent.com/72975725/212965982-77a5fb3e-ae16-4c85-90fd-68eac89fbd7e.jpg" width=30% height=30%>
 .
@@ -15,7 +15,7 @@ Login page
 .
 .
 
-##Loading Main Page
+--> ##Loading Main Page
 .
 
 <img src="https://user-images.githubusercontent.com/72975725/212976090-092e63a3-445b-43f5-b84c-10ee986b778d.jpg" width=30% height=30%>
@@ -23,7 +23,8 @@ Login page
 .
 .
 
-##Main page
+--> ##Main page
+
 Details here are being directly loaded online from json file
 .
 
@@ -32,7 +33,8 @@ Details here are being directly loaded online from json file
 .
 .
 
-##Details Page
+--> ##Details Page
+
 Unable to fetch images due to mobile network issue
 .
 
@@ -41,7 +43,7 @@ Unable to fetch images due to mobile network issue
 .
 .
 
-##Cart Page
+--> ##Cart Page
 .
 
 <img src="https://user-images.githubusercontent.com/72975725/213372733-a5d450b4-12b8-4677-b991-c0cbfa286420.jpg" width=30% height=30%>...
